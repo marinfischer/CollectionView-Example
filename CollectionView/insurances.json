@@ -1,0 +1,53 @@
+{
+    "insurances": [
+                   {
+                   "id": "2",
+                   "imageURL": "person.png",
+                   "name": "Suzy Sunshine",
+                   "type": "Health"
+                   },
+                   {
+                   "id": "19",
+                   "imageURL": "person.png",
+                   "name": "Sam Sunshine",
+                   "type": "Health"
+                   },
+                   {
+                   "id": "39",
+                   "imageURL": "person.png",
+                   "name": "Sean Sunshine",
+                   "type": "Health"
+                   },
+                   {
+                   "id": "29",
+                   "imageURL": "person.png",
+                   "name": "Sally Sunshine",
+                   "type": "Health"
+                   },
+                   {
+                   "id": "3",
+                   "imageURL": "car.png",
+                   "type": "Auto"
+                   },
+                   {
+                   "id": "4",
+                   "imageURL": "tooth.png",
+                   "type": "Dental"
+                   },
+                   {
+                   "id": "5",
+                   "imageURL": "eye.png",
+                   "type": "Vision"
+                   },
+                   {
+                   "id": "6",
+                   "imageURL": "house.png",
+                   "type": "Home"
+                   },
+                   {
+                   "id": "16",
+                   "imageURL": "person.png",
+                   "type": "Life"
+                   }
+                   ]
+}
