@@ -2,52 +2,61 @@
     "insurances": [
                    {
                    "id": "2",
-                   "imageURL": "person.png",
+                   "imageURL": "heart.png",
                    "name": "Suzy Sunshine",
-                   "type": "Health"
+                   "type": "Health",
+                   "backgroundImage": "blueGradient.png"
                    },
                    {
                    "id": "19",
-                   "imageURL": "person.png",
+                   "imageURL": "heart.png",
                    "name": "Sam Sunshine",
-                   "type": "Health"
+                   "type": "Health",
+                   "backgroundImage": "blueGradient.png"
                    },
                    {
                    "id": "39",
-                   "imageURL": "person.png",
+                   "imageURL": "heart.png",
                    "name": "Sean Sunshine",
-                   "type": "Health"
+                   "type": "Health",
+                   "backgroundImage": "blueGradient.png"
                    },
                    {
                    "id": "29",
-                   "imageURL": "person.png",
+                   "imageURL": "heart.png",
                    "name": "Sally Sunshine",
-                   "type": "Health"
+                   "type": "Health",
+                   "backgroundImage": "blueGradient.png"
                    },
                    {
                    "id": "3",
-                   "imageURL": "car.png",
-                   "type": "Auto"
+                   "imageURL": "",
+                   "type": "Auto",
+                   "backgroundImage": "orangeGradient.png"
                    },
                    {
                    "id": "4",
-                   "imageURL": "tooth.png",
-                   "type": "Dental"
+                   "imageURL": "",
+                   "type": "Dental",
+                   "backgroundImage": "purpleGradient.png"
                    },
                    {
                    "id": "5",
-                   "imageURL": "eye.png",
-                   "type": "Vision"
+                   "imageURL": "",
+                   "type": "Vision",
+                   "backgroundImage": "greenGradient.png"
                    },
                    {
                    "id": "6",
-                   "imageURL": "house.png",
-                   "type": "Home"
+                   "imageURL": "",
+                   "type": "Home",
+                   "backgroundImage": "yellowGradient.png"
                    },
                    {
                    "id": "16",
-                   "imageURL": "person.png",
-                   "type": "Life"
+                   "imageURL": "",
+                   "type": "Life",
+                   "backgroundImage": "redGradient.png"
                    }
                    ]
 }

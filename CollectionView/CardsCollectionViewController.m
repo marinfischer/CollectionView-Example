@@ -10,6 +10,7 @@
 #import "LWInsurancesDAO.h"
 #import "InsurancesDataStore.h"
 #import "LWInsurancesModel.h"
+#import "LWCardDetailsCollectionViewController.h"
 
 @interface CardsCollectionViewController ()
 @property (nonatomic, strong) NSDictionary *categories;
@@ -23,6 +24,8 @@
 @property (nonatomic, strong) NSArray *homeArray;
 @property (nonatomic, strong) NSArray *lifeArray;
 @property (nonatomic, strong) NSMutableArray *allCardItems;
+@property (nonatomic, strong) CardLayoutView *cardDetailsLayoutView;
+@property(nonatomic, assign) BOOL useLayoutToLayoutNavigationTransitions;
 
 @end
 
@@ -34,7 +37,16 @@ static NSString * const reuseIdentifier = @"Cell";
     [super awakeFromNib];
     LWInsurancesDAO *insurancesDAO = [LWInsurancesDAO new];
     [insurancesDAO loadJSONFile];
+//    self.useLayoutToLayoutNavigationTransitions = false;
 }
+
+//work around for collection view bug when you transition back to this view controller, the z-ordering of the stacked photos may be wrong
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.collectionView reloadData];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,9 +54,6 @@ static NSString * const reuseIdentifier = @"Cell";
     
     self.categories = [[InsurancesDataStore sharedInstance] insuranceTypesDictionary];
     _categoryGroupsArray = [self.categories allKeys];
-    
-//    NSUInteger photoCount = arc4random()%4 + 2;
-
     
     for (NSString *keyName in _categoryGroupsArray) {
     
@@ -110,35 +119,6 @@ static NSString * const reuseIdentifier = @"Cell";
     
     NSArray *cardItems = self.allCardItems[section];
     return cardItems.count;
-    
-//    NSUInteger numOfItems = 0;
-//    for (NSString *keyName in _categoryGroupsArray) {
-//        if ([keyName isEqualToString:@"Health"]) {
-//            _healthArray = [_categories valueForKey:keyName];
-//            numOfItems = [_healthArray count];
-//            
-//        }else if ([keyName isEqualToString:@"Dental"]) {
-//            _dentalArray = [_categories valueForKey:keyName];
-//            numOfItems = [_dentalArray count];
-//            
-//        }else if ([keyName isEqualToString:@"Vision"]) {
-//            _visionArray = [_categories valueForKey:keyName];
-//            numOfItems = [_visionArray count];
-//
-//        }else if ([keyName isEqualToString:@"Auto"]) {
-//            _autoArray = [_categories valueForKey:keyName];
-//            numOfItems = [_autoArray count];
-//
-//        }else if ([keyName isEqualToString:@"Home"]) {
-//            _homeArray = [_categories valueForKey:keyName];
-//            numOfItems = [_homeArray count];
-//
-//        }else if ([keyName isEqualToString:@"Life"]) {
-//            _lifeArray = [_categories valueForKey:keyName];
-//            numOfItems = [_lifeArray count];
-//        }
-//    }
-//    return numOfItems;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -148,11 +128,58 @@ static NSString * const reuseIdentifier = @"Cell";
     NSArray *group = self.allCardItems[indexPath.section];
     LWInsurancesModel *card = group[indexPath.item];
     [cardCell.imageView setImage:[UIImage imageNamed:card.imageURL]];
+    [cardCell.backgroundImageView setImage:[UIImage imageNamed:card.backgroundImage]];
+    [cardCell.backgroundImageView setClipsToBounds:true];
+    [cardCell.insTypeName setText:card.type];
+    [cardCell.insTypeName setTextColor:[UIColor whiteColor]];
     
     return cardCell;
 }
 
 #pragma mark <UICollectionViewDelegate>
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSArray *cardItems = self.allCardItems[indexPath.section];
+     [cardItems count];
+    if ([cardItems count] == 1) {
+        NSLog(@"%lu", (unsigned long)cardItems.count);
+        //there is only one card to push straight to card view
+    }else {
+    //push card category details collection view
+        NSLog(@"push card category details collection view");
+        [self.navigationController pushViewController:[self nextViewControllerAtPoint:CGPointZero] animated:YES];
+    }
+    
+    NSLog(@"tapped item %ld", (long)indexPath.item);
+    NSLog(@"tapped section %ld", (long)indexPath.section);
+    
+
+}
+
+// obtain the next collection view controller based on where the user tapped in case there are multiple stacks
+- (UICollectionViewController *)nextViewControllerAtPoint:(CGPoint)p
+{
+    // we could have multiple section stacks, so we need to find the right one
+    UICollectionViewFlowLayout *cardDetailsGrid = [[UICollectionViewFlowLayout alloc] init];
+    cardDetailsGrid.itemSize = CGSizeMake(130.0f, 110.0f);
+    cardDetailsGrid.sectionInset = UIEdgeInsetsMake(22.0f, 22.0f, 13.0f, 22.0f);
+    
+    LWCardDetailsCollectionViewController *nextCollectionViewController =
+    [[LWCardDetailsCollectionViewController alloc] initWithCollectionViewLayout:cardDetailsGrid];
+    
+    // Set "useLayoutToLayoutNavigationTransitions" to YES before pushing a a
+    // UICollectionViewController onto a UINavigationController. The top view controller of
+    // the navigation controller must be a UICollectionViewController that was pushed with
+    // this property set to NO. This property should NOT be changed on a UICollectionViewController
+    // that has already been pushed onto a UINavigationController.
+    //
+    nextCollectionViewController.useLayoutToLayoutNavigationTransitions = YES;
+    
+    nextCollectionViewController.title = @"Select Card";
+    
+    return nextCollectionViewController;
+}
 
 /*
 // Uncomment this method to specify if the specified item should be highlighted during tracking

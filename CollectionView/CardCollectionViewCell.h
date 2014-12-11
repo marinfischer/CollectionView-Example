@@ -12,5 +12,6 @@
 @interface CardCollectionViewCell : UICollectionViewCell
 @property (nonatomic, strong, readonly) UIImageView *imageView;
 @property (nonatomic, strong, readonly) UILabel *insTypeName;
+@property (nonatomic, strong, readonly) UIImageView *backgroundImageView;
 
 @end

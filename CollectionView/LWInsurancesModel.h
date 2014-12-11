@@ -13,5 +13,6 @@
 @property (strong, nonatomic) NSString *imageURL;
 @property (strong, nonatomic) NSString *id;
 @property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *backgroundImage;
 
 @end

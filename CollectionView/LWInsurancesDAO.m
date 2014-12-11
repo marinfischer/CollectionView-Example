@@ -9,7 +9,6 @@
 #import "LWInsurancesDAO.h"
 #import "InsurancesDataStore.h"
 #import "LWInsurancesModel.h"
-#import "LWHealthDentalVisionUsersModel.h"
 #import "NSObject+JTObjectMapping.h"
 
 @implementation LWInsurancesDAO

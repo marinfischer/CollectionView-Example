@@ -11,6 +11,7 @@
 #import "CardCollectionViewCell.h"
 #import "TypesCategory.h"
 #import "CardItem.h"
+#import "CardTransitionManager.h"
 
 static NSString * const CardCellIdentifier = @"cardCell";
 

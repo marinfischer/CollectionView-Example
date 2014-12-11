@@ -46,7 +46,7 @@ NSString * const CardLayoutInsuranceTypeKind = @"CategoryTitle";
 - (void)setup
 {
     self.itemInsets = UIEdgeInsetsMake(22.0f, 22.0f, 13.0f, 22.0f);
-    self.itemSize = CGSizeMake(155.0f, 125.0f);
+    self.itemSize = CGSizeMake(130.0f, 110.0f);
     self.interItemSpacingY = 12.0f;
     self.numberOfColumns = 2;
     self.titleHeight = 26.0f;
@@ -92,7 +92,12 @@ NSString * const CardLayoutInsuranceTypeKind = @"CategoryTitle";
             UICollectionViewLayoutAttributes *itemAttributes =
             [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
             itemAttributes.frame = [self frameForAlbumPhotoAtIndexPath:indexPath];
-            itemAttributes.transform3D = [self transformForAlbumPhotoAtIndex:indexPath];
+            if (indexPath.item == 0) {
+                //if its the first card dont rotate
+            }else {
+                itemAttributes.transform3D = [self transformForAlbumPhotoAtIndex:indexPath];
+
+            }
             itemAttributes.zIndex = PhotoCellBaseZIndex + itemCount - item;
             
             cellLayoutInfo[indexPath] = itemAttributes;

@@ -7,8 +7,12 @@
 //
 
 #import "AppDelegate.h"
+#import "CardsCollectionViewController.h"
+#import "CardLayoutView.h"
+#import "CardTransitionManager.h"
 
-@interface AppDelegate ()
+@interface AppDelegate ()<UINavigationControllerDelegate, CardTransitionManagerDelegate>
+@property (nonatomic) CardTransitionManager *transitionManager;
 
 @end
 
@@ -16,9 +20,56 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    
+    // setup our layout and initial collection view
+    CardLayoutView *stackLayout = [[CardLayoutView alloc] init];
+    CardsCollectionViewController *collectionViewController = [[CardsCollectionViewController alloc] initWithCollectionViewLayout:stackLayout];
+    collectionViewController.title = @"Life Wallet";
+    navController.navigationBar.translucent = NO;
+    navController.delegate = self;
+    
+    // add the single collection view to our navigation controller
+    [navController setViewControllers:@[collectionViewController]];
+    
+    // we want a light gray for the navigation bar, otherwise it defaults to white
+    navController.navigationBar.barTintColor = [UIColor lightGrayColor];
+    
     // Override point for customization after application launch.
     return YES;
 }
+
+#pragma mark - UINavigationControllerDelegate
+
+- (id <UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController
+                          interactionControllerForAnimationController:(id <UIViewControllerAnimatedTransitioning>) animationController
+{
+    // return our own transition manager if the incoming controller matches ours
+    if (animationController == self.transitionManager)
+    {
+        return self.transitionManager;
+    }
+    return nil;
+}
+
+- (id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
+                                   animationControllerForOperation:(UINavigationControllerOperation)operation
+                                                fromViewController:(UIViewController *)fromVC
+                                                  toViewController:(UIViewController *)toVC
+{
+    id transitionManager = nil;
+    
+    // make sure we are transitioning from or to a collection view controller, and that interaction is allowed
+    if ([fromVC isKindOfClass:[UICollectionViewController class]] &&
+        [toVC isKindOfClass:[UICollectionViewController class]] &&
+        self.transitionManager.hasActiveInteraction)
+    {
+        self.transitionManager.navigationOperation = operation;
+        transitionManager = self.transitionManager;
+    }
+    return transitionManager;
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
