@@ -8,7 +8,7 @@
 
 #import "LWCardDetailsCollectionViewController.h"
 
-@interface LWCardDetailsCollectionViewController ()
+@interface LWCardDetailsCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @end
 

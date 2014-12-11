@@ -33,7 +33,7 @@
     [navController setViewControllers:@[collectionViewController]];
     
     // we want a light gray for the navigation bar, otherwise it defaults to white
-    navController.navigationBar.barTintColor = [UIColor lightGrayColor];
+    navController.navigationBar.barTintColor = [UIColor whiteColor];
     
     // Override point for customization after application launch.
     return YES;

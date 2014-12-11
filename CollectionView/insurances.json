@@ -35,6 +35,12 @@
                    "backgroundImage": "orangeGradient.png"
                    },
                    {
+                   "id": "3",
+                   "imageURL": "",
+                   "type": "Auto",
+                   "backgroundImage": "orangeGradient.png"
+                   },
+                   {
                    "id": "4",
                    "imageURL": "",
                    "type": "Dental",
